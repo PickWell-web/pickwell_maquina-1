@@ -5,270 +5,67 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PickWell — Produtos</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
   :root {
     --teal: #4B8190;
     --teal-dark: #3a6570;
     --teal-light: #e8f2f4;
     --cream: #ECEDDA;
-    --cream-dark: #d8d9c4;
     --text-dark: #1e3035;
-    --text-mid: #4a6870;
     --text-light: #7a9ba3;
     --white: #ffffff;
-    --radius: 14px;
-    --radius-sm: 8px;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text-dark); min-height: 100vh; -webkit-font-smoothing: antialiased; }
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--cream);
-    color: var(--text-dark);
-    min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
-  }
+  header { background: var(--teal); padding: 20px 20px 14px; text-align: center; position: sticky; top: 0; z-index: 100; }
+  header svg { height: 30px; width: auto; }
+  .tagline { font-size: 11px; color: rgba(236,237,218,0.65); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 5px; }
 
-  header {
-    background: var(--teal);
-    padding: 20px 20px 16px;
-    text-align: center;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-
-  header svg { height: 32px; width: auto; }
-
-  .tagline {
-    font-size: 12px;
-    color: rgba(236,237,218,0.7);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-top: 6px;
-    font-weight: 400;
-  }
-
-  .filter-section {
-    padding: 14px 16px 8px;
-    background: var(--cream);
-    position: sticky;
-    top: 82px;
-    z-index: 90;
-    border-bottom: 1px solid rgba(75,129,144,0.12);
-  }
-
-  .filter-scroll {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    scrollbar-width: none;
-    padding-bottom: 2px;
-  }
+  .filter-section { padding: 12px 16px 8px; background: var(--cream); position: sticky; top: 76px; z-index: 90; border-bottom: 1px solid rgba(75,129,144,0.1); }
+  .filter-scroll { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
   .filter-scroll::-webkit-scrollbar { display: none; }
+  .chip { flex-shrink: 0; border: 1.5px solid var(--teal); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 500; background: transparent; color: var(--teal); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; white-space: nowrap; }
+  .chip.active { background: var(--teal); color: var(--cream); }
 
-  .chip {
-    flex-shrink: 0;
-    border: 1.5px solid var(--teal);
-    border-radius: 20px;
-    padding: 5px 14px;
-    font-size: 12px;
-    font-weight: 500;
-    background: transparent;
-    color: var(--teal);
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    transition: all 0.15s ease;
-    white-space: nowrap;
-  }
-  .chip.active, .chip:active {
-    background: var(--teal);
-    color: var(--cream);
-  }
+  .count-bar { padding: 10px 16px 0; font-size: 12px; color: var(--text-light); }
 
-  .count-bar {
-    padding: 10px 16px 0;
-    font-size: 12px;
-    color: var(--text-light);
-    font-weight: 400;
-  }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; padding: 10px 12px 32px; }
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-    padding: 10px 12px 32px;
-  }
-
-  .card {
-    background: var(--white);
-    border-radius: var(--radius);
-    border: 1px solid rgba(75,129,144,0.12);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.15s ease;
-  }
+  .card { background: var(--white); border-radius: 18px; border: 1px solid rgba(75,129,144,0.1); overflow: hidden; display: flex; flex-direction: column; transition: transform 0.15s; }
   .card:active { transform: scale(0.98); }
 
-  .card-img-wrap {
-    width: 100%;
-    height: 88px;
-    background: var(--teal-light);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    position: relative;
-  }
+  .card-img-wrap { width: 100%; height: 110px; background: #f0f0ea; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .card-img-wrap img { width: 100%; height: 100%; object-fit: contain; padding: 10px; }
+  .img-placeholder { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
 
-  .card-img-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: 8px;
-  }
+  .card-body { padding: 12px 12px 14px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
 
-  .img-placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-  }
+  .card-brand { font-size: 10px; color: var(--teal); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+  .card-name { font-size: 15px; font-weight: 700; color: var(--text-dark); line-height: 1.3; }
 
-  .card-body {
-    padding: 9px 10px 11px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    flex: 1;
-  }
+  .cat-badge { display: block; font-size: 11px; padding: 4px 10px; border-radius: 8px; font-weight: 500; width: 100%; }
+  .cat-fit  { background: #dff2ec; color: #0d6b52; }
+  .cat-prot { background: #fef0d8; color: #8a4e0a; }
+  .cat-nat  { background: #e8f3dc; color: #3a6d10; }
+  .cat-other{ background: var(--teal-light); color: var(--teal-dark); }
 
-  .card-brand {
-    font-size: 10px;
-    color: var(--teal);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
+  .nutrients { display: grid; grid-template-columns: repeat(3,1fr); gap: 4px; margin-top: 2px; }
+  .nut { background: #f2f2ec; border-radius: 8px; padding: 6px 4px; text-align: center; }
+  .nut-val { display: block; font-size: 13px; font-weight: 700; color: var(--text-dark); line-height: 1.2; }
+  .nut-label { display: block; font-size: 9px; color: var(--text-light); margin-top: 2px; }
 
-  .card-name {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text-dark);
-    line-height: 1.35;
-  }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
+  .kcal-row { display: flex; align-items: baseline; gap: 3px; }
+  .kcal-val { font-size: 14px; font-weight: 700; color: var(--teal); }
+  .kcal-label { font-size: 11px; color: var(--text-light); }
+  .pvp { font-size: 15px; font-weight: 700; color: var(--text-dark); font-family: 'DM Serif Display', serif; }
 
-  .cat-badge {
-    display: inline-block;
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-weight: 500;
-    width: fit-content;
-  }
-  .cat-fit    { background: #dff2ec; color: #0d6b52; }
-  .cat-prot   { background: #fef0d8; color: #8a4e0a; }
-  .cat-nat    { background: #e8f3dc; color: #3a6d10; }
-  .cat-other  { background: var(--teal-light); color: var(--teal-dark); }
+  .empty, .loading { grid-column: 1/-1; text-align: center; padding: 48px 20px; color: var(--text-light); font-size: 14px; }
+  .error { grid-column: 1/-1; text-align: center; padding: 48px 20px; color: #c0392b; font-size: 13px; }
 
-  .nutrients {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 4px;
-    margin-top: 2px;
-  }
-
-  .nut {
-    background: var(--cream);
-    border-radius: 6px;
-    padding: 5px 3px;
-    text-align: center;
-  }
-
-  .nut-val {
-    display: block;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text-dark);
-    line-height: 1.2;
-  }
-
-  .nut-label {
-    display: block;
-    font-size: 9px;
-    color: var(--text-light);
-    margin-top: 1px;
-  }
-
-  .card-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 4px;
-  }
-
-  .kcal-wrap {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    background: var(--teal-light);
-    border-radius: 6px;
-    padding: 3px 7px;
-  }
-
-  .kcal {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--teal-dark);
-  }
-
-  .kcal-label {
-    font-size: 10px;
-    color: var(--text-light);
-  }
-
-  .pvp {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--teal);
-    font-family: 'DM Serif Display', serif;
-  }
-
-  .empty {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 48px 20px;
-    color: var(--text-light);
-    font-size: 14px;
-  }
-
-  .loading {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 48px 20px;
-    color: var(--text-light);
-    font-size: 14px;
-  }
-
-  .error {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 48px 20px;
-    color: #c0392b;
-    font-size: 13px;
-  }
-
-  footer {
-    text-align: center;
-    padding: 16px;
-    font-size: 11px;
-    color: var(--text-light);
-    border-top: 1px solid rgba(75,129,144,0.1);
-  }
+  footer { text-align: center; padding: 16px; font-size: 11px; color: var(--text-light); border-top: 1px solid rgba(75,129,144,0.1); font-style: italic; }
 </style>
 </head>
 <body>
@@ -385,15 +182,9 @@ function renderGrid() {
     return `
       <div class="card">
         <div class="card-img-wrap">
-          ${imgUrl
-            ? `<img src="${imgUrl}" alt="${nome}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
-            : ''}
+          ${imgUrl ? `<img src="${imgUrl}" alt="${nome}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">` : ''}
           <div class="img-placeholder" style="${imgUrl ? 'display:none' : 'display:flex'}">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#9ec4cc" stroke-width="1.5">
-              <rect x="3" y="3" width="18" height="18" rx="3"/>
-              <circle cx="8.5" cy="8.5" r="1.5"/>
-              <path d="M21 15l-5-5L5 21"/>
-            </svg>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#b8c8cc" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
           </div>
         </div>
         <div class="card-body">
@@ -406,7 +197,10 @@ function renderGrid() {
             <div class="nut"><span class="nut-val">${fibra}</span><span class="nut-label">Fibra</span></div>
           </div>
           <div class="card-footer">
-            ${kcal ? `<div class="kcal-wrap"><span class="kcal">${kcal}</span><span class="kcal-label">kcal/dose</span></div>` : '<span></span>'}
+            <div class="kcal-row">
+              <span class="kcal-val">${kcal}</span>
+              <span class="kcal-label"> kcal/dose</span>
+            </div>
             <span class="pvp">${pvp}</span>
           </div>
         </div>
@@ -418,7 +212,7 @@ function renderGrid() {
 async function loadProducts() {
   try {
     const res = await fetch(CSV_URL);
-    if (!res.ok) throw new Error("Erro ao carregar dados");
+    if (!res.ok) throw new Error("Erro");
     const text = await res.text();
     const all = parseCSV(text);
     allProducts = all.filter(p => (p["Disponivel"] || "").toLowerCase() === "sim");
