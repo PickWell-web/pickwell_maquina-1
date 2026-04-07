@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -210,7 +211,22 @@
     margin-top: 4px;
   }
 
+  .kcal-wrap {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    background: var(--teal-light);
+    border-radius: 6px;
+    padding: 3px 7px;
+  }
+
   .kcal {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--teal-dark);
+  }
+
+  .kcal-label {
     font-size: 10px;
     color: var(--text-light);
   }
@@ -285,7 +301,7 @@
   <div class="loading">A carregar produtos...</div>
 </div>
 
-<footer>PickWell &mdash; Snacks saudáveis</footer>
+<footer>Escolhe bem. Vive Melhor!</footer>
 
 <script>
 const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRXOryj6fO8iMD6s6FXp1nbhuHhpHughk3GZGRqK2b2Ehqv7pP4kzVjQMiLnWPtHQPbFTL4N6qe3HQS/pub?gid=0&single=true&output=csv";
@@ -390,7 +406,7 @@ function renderGrid() {
             <div class="nut"><span class="nut-val">${fibra}</span><span class="nut-label">Fibra</span></div>
           </div>
           <div class="card-footer">
-            <span class="kcal">${kcal ? kcal + ' kcal' : ''}</span>
+            ${kcal ? `<div class="kcal-wrap"><span class="kcal">${kcal}</span><span class="kcal-label">kcal/dose</span></div>` : '<span></span>'}
             <span class="pvp">${pvp}</span>
           </div>
         </div>
