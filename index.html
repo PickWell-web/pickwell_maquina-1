@@ -19,8 +19,8 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text-dark); min-height: 100vh; -webkit-font-smoothing: antialiased; }
 
-  header { background: var(--cream); padding: 10px 20px; position: sticky; top: 0; z-index: 100; transition: background 0.3s ease; border-bottom: 1px solid rgba(75,129,144,0.08); }
-  header.scrolled { background: #2f464c; border-bottom-color: transparent; padding: 8px 20px; }
+  header { background: var(--cream); padding: 6px 16px; position: sticky; top: 0; z-index: 100; transition: background 0.3s ease; border-bottom: 1px solid rgba(75,129,144,0.08); }
+  header.scrolled { background: #2f464c; border-bottom-color: transparent; padding: 4px 16px; }
 
   .logo-default { display: block; }
   .logo-default svg { height: 40px; width: auto; display: block; }
@@ -32,11 +32,14 @@
   .tagline { font-size: 11px; color: rgba(47,70,76,0.5); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 4px; transition: color 0.3s; }
   header.scrolled .tagline { color: rgba(236,237,218,0.6); }
 
-  .filter-section { padding: 12px 16px 8px; background: var(--cream); position: sticky; top: 72px; z-index: 90; border-bottom: 1px solid rgba(75,129,144,0.1); }
-  .filter-scroll { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+  .filter-scroll-wrap { margin-top: 8px; }
+  .filter-scroll { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
   .filter-scroll::-webkit-scrollbar { display: none; }
   .chip { flex-shrink: 0; border: 1.5px solid var(--teal); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 500; background: transparent; color: var(--teal); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; white-space: nowrap; }
   .chip.active { background: var(--teal); color: var(--cream); }
+  header.scrolled .chip { border-color: rgba(236,237,218,0.5); color: rgba(236,237,218,0.8); }
+  header.scrolled .chip.active { background: rgba(236,237,218,0.2); color: var(--cream); border-color: var(--cream); }
+  .filter-scroll { margin-top: 8px; }
 
   .count-bar { padding: 10px 16px 0; font-size: 12px; color: var(--text-light); }
 
@@ -123,13 +126,10 @@
     <rect width="52.54" height="51.13" x="-26.27" y="-25.565" fill="none" rx="0" ry="0" transform="matrix(1.3675 0 0 1.369 122.138 363.415)"/>
     <path fill="#ECEDDA" d="M119.403 369.85c5.993 0 10.85-6.13 10.85-13.692 0-7.563-4.857-13.693-10.85-13.693z"/>
 </svg></div>
-</header>
-
-<div class="filter-section">
   <div class="filter-scroll" id="filters">
     <button class="chip active" data-cat="todos">Todos</button>
   </div>
-</div>
+</header>
 
 <div class="count-bar" id="count"></div>
 
